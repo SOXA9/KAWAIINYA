@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CD Games Development</title>
+    <link rel="icon" href="https://sun9-3.userapi.com/s/v1/ig2/BTSz9vOXkT_sJI1a2OD34Nb2wBp7I6lFO7oY4cR15Q5eybz-xHhwQopfF-JubC_yUurnf9H3pOEpcvBxFavxZ77l.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720&from=bu&cs=720x0" type="image/jpeg">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval';">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+    <style>
+        :root {
+            --primary-color: #4CBB17;
+            --secondary-color: #9400D3;
+            --dark-bg: #0A0A0A;
+            --light-bg: #121212;
+            --text-color: #FFFFFF;
+            --accent-color: #FF3366;
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--dark-bg);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .logo:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+        
+        .logo-text {
+            margin-left: 15px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        
+        .language-switcher {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+        
+        .lang-btn.active {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+        }
+        
+        .lang-btn:hover:not(.active) {
+            background-color: rgba(76, 187, 23, 0.2);
+        }
+        
+        nav {
+            background-color: var(--light-bg);
+            padding: 15px 0;
+            margin-bottom: 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 10px 0;
+            position: relative;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .content-section {
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .content-section:last-of-type {
+            border-bottom: none;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            bottom: -10px;
+            left: 0;
+            background-color: var(--accent-color);
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .services-list {
+            list-style: none;
+            margin-left: 20px;
+        }
+        
+        .services-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .services-list li:before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+        
+        .games-list {
+            list-style: none;
+            margin-left: 20px;
+        }
+        
+        .games-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .games-list li:before {
+            content: '🎮';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+        
+        .games-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .games-list a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+        
+        footer {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            padding: 60px 0 30px;
+            margin-top: 40px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .social-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: var(--dark-bg);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        .add-game-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .add-game-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        .add-game-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+        
+        .admin-panel {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .admin-panel h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #1A1A1A;
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+        
+        .admin-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: #000;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            flex: 1;
+        }
+        
+        .submit-btn:hover {
+            background-color: #3DA015;
+        }
+        
+        .cancel-btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            flex: 1;
+        }
+        
+        .cancel-btn:hover {
+            background-color: #444;
+        }
+        
+        .game-item {
+            background-color: #1A1A1A;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .game-info {
+            flex-grow: 1;
+        }
+        
+        .game-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .game-url {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 5px;
+        }
+        
+        .remove-btn {
+            background-color: #FF3366;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .remove-btn:hover {
+            background-color: #E62E5C;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: var(--light-bg);
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .modal h3 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .success {
+            background-color: rgba(76, 187, 23, 0.2);
+            color: #4CBB17;
+        }
+        
+        .error {
+            background-color: rgba(255, 51, 102, 0.2);
+            color: #FF3366;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .footer-top {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .admin-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <img src="https://sun9-3.userapi.com/s/v1/ig2/BTSz9vOXkT_sJI1a2OD34Nb2wBp7I6lFO7oY4cR15Q5eybz-xHhwQopfF-JubC_yUurnf9H3pOEpcvBxFavxZ77l.jpg?quality=95&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360,480x480,540x540,640x640,720x720&from=bu&cs=720x0" 
+                     alt="CD Games Entertainment" 
+                     class="logo"
+                     crossorigin="anonymous">
+                <div class="logo-text">CD Games</div>
+            </div>
+            <div class="language-switcher">
+                <button class="lang-btn active" data-lang="ru">RU</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#home" data-key="nav-home">Главная</a></li>
+                <li><a href="#about" data-key="nav-about">О нас</a></li>
+                <li><a href="#services" data-key="nav-services">Специализация</a></li>
+                <li><a href="#portfolio" data-key="nav-portfolio">Наши игры</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="container main-content">
+        <section id="home" class="content-section fade-in">
+            <h1 data-key="home-title">Добро пожаловать в CD Games</h1>
+            <p data-key="home-subtitle">Games are a way to relax</p>
+        </section>
+        
+        <section id="about" class="content-section fade-in">
+            <h2 data-key="about-title">О нас</h2>
+            <p data-key="about-text1">Наше объединение создано в 2025 году с целью создания компьютерных игр в различных жанрах. Разработка ведётся при помощи игрового движка Godot Engine.</p>
+            <p data-key="about-text2">В данный момент наше объединение не имеет полностью изданных игр, но мы активно работаем над несколькими проектами.</p>
+        </section>
+        
+        <section id="services" class="content-section fade-in">
+            <h2 data-key="services-title">Наша специализация</h2>
+            <ul class="services-list">
+                <li data-key="service1">Разработка игр под PC платформы</li>
+                <li data-key="service2">Создание игровых концепций и дизайна</li>
+                <li data-key="service3">Программирование игровой логики</li>
+                <li data-key="service4">Создание 2D и 3D графики</li>
+                <li data-key="service5">Написание игровых сценариев</li>
+            </ul>
+        </section>
+        
+        <section id="portfolio" class="content-section fade-in">
+            <h2 data-key="portfolio-title">Наши проекты</h2>
+            <ul class="games-list" id="games-list">
+            </ul>
+            <p data-key="portfolio-text2">Следите за обновлениями в нашем Телграм-канале!</p>
+        </section>
+        
+        <section class="add-game-section">
+            <button class="add-game-btn" id="add-game-btn">Добавить игру</button>
+            
+            <div id="admin-panel" class="admin-panel">
+                <h3>Панель управления играми</h3>
+                
+                <div id="admin-message" class="message" style="display: none;"></div>
+                
+                <div class="form-group">
+                    <label for="game-name">Название игры:</label>
+                    <input type="text" id="game-name" placeholder="Введите название игры">
+                </div>
+                
+                <div class="form-group">
+                    <label for="game-url">Ссылка для скачивания:</label>
+                    <input type="text" id="game-url" placeholder="Введите URL для скачивания">
+                </div>
+                
+                <div class="admin-buttons">
+                    <button class="submit-btn" id="submit-game">Добавить игру</button>
+                    <button class="cancel-btn" id="cancel-add">Отмена</button>
+                </div>
+                
+                <div class="game-list" style="margin-top: 30px;">
+                    <h4>Текущие игры:</h4>
+                    <div id="admin-games-container"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div id="password-modal" class="modal">
+        <div class="modal-content">
+            <h3>Введите пароль</h3>
+            <div class="form-group">
+                <input type="password" id="admin-password" placeholder="Введите пароль">
+            </div>
+            <div class="admin-buttons">
+                <button class="submit-btn" id="confirm-password">Подтвердить</button>
+                <button class="cancel-btn" id="cancel-password">Отмена</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-top">
+                <p data-key="footer-text">© 2025 Все права защищены. CD Games Entertainment</p>
+                <div class="social-links">
+                    <a href="https://t.me/CDGamess" target="_blank">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.14.141-.259.259-.374.261l.213-3.053 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.136-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+                        </svg>
+                        <span data-key="telegram-link">Telegram</span>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p data-key="footer-copyright">Сделано с ❤️ для игроков</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+                console.warn('Для полной безопасности рекомендуется использовать HTTPS');
+            }
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                const langButtons = document.querySelectorAll('.lang-btn');
+                const addGameBtn = document.getElementById('add-game-btn');
+                const passwordModal = document.getElementById('password-modal');
+                const adminPasswordInput = document.getElementById('admin-password');
+                const confirmPasswordBtn = document.getElementById('confirm-password');
+                const cancelPasswordBtn = document.getElementById('cancel-password');
+                const adminPanel = document.getElementById('admin-panel');
+                const gameNameInput = document.getElementById('game-name');
+                const gameUrlInput = document.getElementById('game-url');
+                const submitGameBtn = document.getElementById('submit-game');
+                const cancelAddBtn = document.getElementById('cancel-add');
+                const adminMessage = document.getElementById('admin-message');
+                
+                let currentLang = 'ru';
+                let isAuthenticated = localStorage.getItem('cd-games-auth') === 'true';
+                
+                if (isAuthenticated) {
+                    adminPanel.style.display = 'block';
+                    loadAdminGames();
+                }
+                
+                updateContent(currentLang);
+                
+                langButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const lang = this.getAttribute('data-lang');
+                        if (lang !== currentLang) {
+                            currentLang = lang;
+                            updateContent(currentLang);
+                            
+                            langButtons.forEach(btn => btn.classList.remove('active'));
+                            this.classList.add('active');
+                        }
+                    });
+                });
+                
+                addGameBtn.addEventListener('click', function() {
+                    if (isAuthenticated) {
+                        adminPanel.style.display = 'block';
+                    } else {
+                        passwordModal.style.display = 'flex';
+                        adminPasswordInput.focus();
+                    }
+                });
+                
+                confirmPasswordBtn.addEventListener('click', function() {
+                    const enteredPassword = adminPasswordInput.value.trim();
+                    
+                    if (enteredPassword === CORRECT_PASSWORD) {
+                        isAuthenticated = true;
+                        localStorage.setItem('cd-games-auth', 'true');
+                        passwordModal.style.display = 'none';
+                        adminPanel.style.display = 'block';
+                        adminPasswordInput.value = '';
+                        loadAdminGames();
+                    } else {
+                        showAdminMessage('Неверный пароль', 'error');
+                        adminPasswordInput.value = '';
+                        adminPasswordInput.focus();
+                    }
+                });
+                
+                cancelPasswordBtn.addEventListener('click', function() {
+                    passwordModal.style.display = 'none';
+                    adminPasswordInput.value = '';
+                });
+                
+                submitGameBtn.addEventListener('click', function() {
+                    const name = gameNameInput.value.trim();
+                    const url = gameUrlInput.value.trim();
+                    
+                    if (!name || !url) {
+                        showAdminMessage('Пожалуйста, заполните все поля', 'error');
+                        return;
+                    }
+                    
+                    if (games.some(game => game.name === name)) {
+                        showAdminMessage('Игра с таким названием уже существует', 'error');
+                        return;
+                    }
+                    
+                    if (addGame(name, url)) {
+                        showAdminMessage('Игра успешно добавлена!', 'success');
+                        gameNameInput.value = '';
+                        gameUrlInput.value = '';
+                        loadAdminGames();
+                        renderGames();
+                    } else {
+                        showAdminMessage('Ошибка при добавлении игры', 'error');
+                    }
+                });
+                
+                cancelAddBtn.addEventListener('click', function() {
+                    adminPanel.style.display = 'none';
+                    gameNameInput.value = '';
+                    gameUrlInput.value = '';
+                    adminMessage.style.display = 'none';
+                });
+                
+                function updateContent(lang) {
+                    const elements = document.querySelectorAll('[data-key]');
+                    
+                    elements.forEach(element => {
+                        const key = element.getAttribute('data-key');
+                        if (translations[lang][key]) {
+                            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                                element.placeholder = translations[lang][key];
+                            } else {
+                                element.textContent = translations[lang][key];
+                            }
+                        }
+                    });
+                }
+                
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+                
+                const observer = new IntersectionObserver(function(entries) {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('fade-in');
+                        }
+                    });
+                }, observerOptions);
+                
+                document.querySelectorAll('.content-section').forEach(section => {
+                    observer.observe(section);
+                });
+                
+                loadGames();
+            });
+        })();
+
+        const translations = {
+            ru: {
+                "nav-home": "Главная",
+                "nav-about": "О нас",
+                "nav-services": "Специализация",
+                "nav-portfolio": "Наши игры",
+                "home-title": "Добро пожаловать в CD Games",
+                "home-subtitle": "Games are a way to relax",
+                "about-title": "О нас",
+                "about-text1": "Наше объединение создано в 2025 году с целью создания компьютерных игр в различных жанрах. Разработка ведётся при помощи игрового движка Godot Engine.",
+                "about-text2": "В данный момент наше объединение не имеет полностью изданных игр, но мы активно работаем над несколькими проектами.",
+                "services-title": "Наша специализация",
+                "service1": "Разработка игр под PC платформы",
+                "service2": "Создание игровых концепций и дизайна",
+                "service3": "Программирование игровой логики",
+                "service4": "Создание 2D и 3D графики",
+                "service5": "Написание игровых сценариев",
+                "portfolio-title": "Наши проекты",
+                "portfolio-text2": "Следите за обновлениями в нашем Телграм-канале!",
+                "footer-text": "© 2025 Все права защищены. CD Games Entertainment",
+                "telegram-link": "Telegram",
+                "footer-copyright": "Сделано с ❤️ для игроков"
+            },
+            en: {
+                "nav-home": "Home",
+                "nav-about": "About",
+                "nav-services": "Services",
+                "nav-portfolio": "Our Games",
+                "home-title": "Welcome to CD Games",
+                "home-subtitle": "Games are a way to relax",
+                "about-title": "About Us",
+                "about-text1": "Our association was founded in 2025 with the goal of creating computer games in various genres. Development is carried out using the Godot Engine.",
+                "about-text2": "Currently, our association does not have fully published games, but we are actively working on several projects.",
+                "services-title": "Our Specialization",
+                "service1": "Game development for PC platforms",
+                "service2": "Creating game concepts and design",
+                "service3": "Programming game logic",
+                "service4": "Creating 2D and 3D graphics",
+                "service5": "Writing game scenarios",
+                "portfolio-title": "Our Projects",
+                "portfolio-text2": "Follow updates in our Telegram channel!",
+                "footer-text": "© 2025 All rights reserved. CD Games Entertainment",
+                "telegram-link": "Telegram",
+                "footer-copyright": "Made with ❤️ for gamers"
+            }
+        };
+
+        let games = [];
+        const CORRECT_PASSWORD = 'CD1996LX';
+
+        function loadGames() {
+            const savedGames = localStorage.getItem('cd-games');
+            if (savedGames) {
+                games = JSON.parse(savedGames);
+                renderGames();
+            }
+        }
+
+        function loadAdminGames() {
+            const gamesContainer = document.getElementById('admin-games-container');
+            gamesContainer.innerHTML = '';
+            
+            if (games.length === 0) {
+                gamesContainer.innerHTML = '<p>Нет добавленных игр</p>';
+                return;
+            }
+            
+            games.forEach((game, index) => {
+                const gameItem = document.createElement('div');
+                gameItem.className = 'game-item';
+                
+                const gameInfo = document.createElement('div');
+                gameInfo.className = 'game-info';
+                
+                const gameName = document.createElement('div');
+                gameName.className = 'game-name';
+                gameName.textContent = game.name;
+                
+                const gameUrl = document.createElement('div');
+                gameUrl.className = 'game-url';
+                gameUrl.textContent = game.url;
+                
+                gameInfo.appendChild(gameName);
+                gameInfo.appendChild(gameUrl);
+                
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.textContent = 'Удалить';
+                removeBtn.addEventListener('click', function() {
+                    if (removeGame(game.name)) {
+                        showAdminMessage('Игра удалена', 'success');
+                        loadAdminGames();
+                        renderGames();
+                    } else {
+                        showAdminMessage('Ошибка при удалении игры', 'error');
+                    }
+                });
+                
+                gameItem.appendChild(gameInfo);
+                gameItem.appendChild(removeBtn);
+                
+                gamesContainer.appendChild(gameItem);
+            });
+        }
+
+        function saveGames() {
+            localStorage.setItem('cd-games', JSON.stringify(games));
+        }
+
+        function renderGames() {
+            const gamesList = document.getElementById('games-list');
+            gamesList.innerHTML = '';
+            
+            if (games.length === 0) {
+                const emptyMessage = document.createElement('li');
+                emptyMessage.textContent = 'Скоро здесь появятся наши игры!';
+                gamesList.appendChild(emptyMessage);
+                return;
+            }
+            
+            games.forEach((game, index) => {
+                const listItem = document.createElement('li');
+                const gameLink = document.createElement('a');
+                gameLink.href = game.url;
+                gameLink.textContent = game.name;
+                gameLink.target = '_blank';
+                
+                listItem.appendChild(gameLink);
+                gamesList.appendChild(listItem);
+            });
+        }
+
+        function addGame(name, url) {
+            games.push({ name, url });
+            saveGames();
+            return true;
+        }
+
+        function removeGame(name) {
+            const initialLength = games.length;
+            games = games.filter(game => game.name !== name);
+            saveGames();
+            return games.length !== initialLength;
+        }
+
+        function showAdminMessage(text, type) {
+            const adminMessage = document.getElementById('admin-message');
+            adminMessage.textContent = text;
+            adminMessage.className = `message ${type}`;
+            adminMessage.style.display = 'block';
+            
+            setTimeout(() => {
+                adminMessage.style.display = 'none';
+            }, 3000);
+        }
+
+        window.getGames = function() {
+            return [...games];
+        }
+    </script>
+</body>
+</html>
